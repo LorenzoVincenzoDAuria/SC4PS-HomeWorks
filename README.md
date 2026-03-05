@@ -1,9 +1,9 @@
 # SC4PS-HomeWorks
-This repo contains homeworks and codes from Scientific Computing for Physics Student PhD course at Unviersity of Padova
+This repo contains homeworks and codes from Scientific Computing for Physics Student PhD course at University of Padova
 
 # Guide: Setting Up a Linux Machine on CloudVeneto for C/C++
 
-This guide outlines the steps required to configure a Linux virtual machine (Debian/Ubuntu-based) hosted on CloudVeneto to compile and run C code.
+This guide outlines the steps required to configure a Linux virtual machine (AlmaLinux-based) hosted on CloudVeneto to compile and run C code.
 
 ## 1. Prerequisites
 * An active virtual machine on [CloudVeneto](https://cloudveneto.it/).
@@ -15,24 +15,25 @@ Open your terminal (or PowerShell on Windows) and connect to the machine via SSH
 
 ```bash
 # Replace the path and IP address with your actual data
-ssh -i /path/to/your/key.pem ubuntu@<CLOUDVENETO_IP_ADDRESS>
+ssh -i /path/to/your/key.pem almalinux@<CLOUDVENETO_IP_ADDRESS>
 ```
 
-> **Note:** If your machine uses a different operating system, the default user might be `centos`, `debian`, or `fedora` instead of `ubuntu`.
+> **Note:** For AlmaLinux images, the default user is `almalinux` (whereas on Debian/Ubuntu it would be `ubuntu`).
 
 ## 3. Updating the System
 Once logged into the virtual machine, it is a best practice to update the package lists and upgrade the system before installing new software:
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
+sudo dnf check-update
+sudo dnf upgrade -y
 ```
 
 ## 4. Installing the C Compiler (GCC)
-To compile C code on Linux, you need the `build-essential` package. This will install the `gcc` compiler, the `make` tool, and other standard libraries:
+To compile C/C++ code on AlmaLinux, you need the "Development Tools" group and to enable the CRB (Code Ready Builder) repository. This will install the `gcc` compiler, the `make` tool, and other standard libraries required for scientific computing:
 
 ```bash
-sudo apt install build-essential -y
+sudo dnf groupinstall "Development Tools" -y
+sudo dnf config-manager --set-enabled crb
 ```
 
 To verify that the installation was successful, check the installed version of GCC:
